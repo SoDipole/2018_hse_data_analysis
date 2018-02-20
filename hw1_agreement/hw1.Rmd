@@ -15,7 +15,7 @@ library(irr)
 ### 1.1
 _Скачайте датасет hw1_1_zilo_class.csv. Получите тиббл содержащий два столбца: stimulus_source и количество уникальных слов в датасете (n)._
 ```{r}
-zilo_classes <- read_csv("hw1_1_zilo_class.csv")
+zilo_classes <- read_csv("https://raw.githubusercontent.com/SoDipole/2018_hse_data_analysis/master/hw1_agreement/hw1_1_zilo_class.csv")
 zilo_classes <- as_tibble(zilo_classes)
 zilo_classes %>%
   distinct(stimulus_source, translation_ru) %>% 
@@ -52,7 +52,7 @@ _Представим, что Вы пишите статью, напишите �
 ### 2.1
 _Скачайте датасет hw1_2_verbs.csv (см. описание выше). Посчитайте количество участников в датасете (в ответ выведите тибл с переменной n)._
 ```{r}
-marginal_verbs <- read_csv("hw1_2_verbs.csv")
+marginal_verbs <- read_csv("https://raw.githubusercontent.com/SoDipole/2018_hse_data_analysis/master/hw1_agreement/hw1_2_verbs.csv")
 marginal_verbs <- as_tibble(marginal_verbs)
 marginal_verbs %>%
   distinct(SubjectCode) %>% 
