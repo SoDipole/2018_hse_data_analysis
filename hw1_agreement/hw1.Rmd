@@ -1,0 +1,43 @@
+---
+title: "hw1"
+author: "Polina Sonina"
+date: '20 февраля 2018 г '
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(irr)
+```
+
+### 1.1
+Скачайте датасет hw1_1_zilo_class.csv. Получите тиббл содержащий два столбца: stimulus_source и количество уникальных слов в датасете (n).
+
+```{r}
+zilo_classes <- read_csv("hw1_1_zilo_class.csv")
+zilo_classes <- as_tibble(zilo_classes)
+zilo_classes %>%
+  distinct(stimulus_source, translation_ru) %>% 
+  count(stimulus_source)
+```
+
+### 1.2
+Преобразуйте датасет hw1_1_zilo_class.csv. Посчитайте процент полного согласия всех спикеров.
+```{r}
+zilo_classes %>% 
+  select(s_id, stimulus, translation_ru, stimulus_source, class) %>% 
+  spread(key = s_id, value = class) ->
+  zilo_classes_short
+agree(zilo_classes_short[,-c(1:3)])
+```
+
+### 1.3
+Из преобразованным датасета hw1_1_zilo_class.csv выберите спикеров с номером 7 и 11 и посчитайте для них каппу Коэна.
+```{r}
+zilo_classes_2s <- zilo_classes_short[,c(7, 11)]
+agree(zilo_classes_2s)
+
+```
+
