@@ -93,7 +93,8 @@ icc(marginal_verbs_short[,-c(1:3)], model = "twoway", type = "agreement")
 ### 2.5
 _Создайте тибл, содержащий минимальное (min) и максимальное (max) значение попарной корреляции Кендала ответов всех участников эксперимента со словами (т. е. корреляция ответов АА и AB, AA и AC и т. д.). В преобразовании матрицы, пораждаемой функцией cor() мне очень помогла функция as.table()._
 ``` {r}
-
+corr_table <- as.table(cor(marginal_verbs_short[,-c(1:3)], method = "kendall"))
+tibble(min = min(corr_table[upper.tri(corr_table)]), max = max(corr_table[upper.tri(corr_table)]))
 ```
 
 
