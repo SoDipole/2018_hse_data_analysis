@@ -11,19 +11,29 @@ library(tidyverse)
 library(mosaic)
 
 data <- read_csv("hw2_binomial.csv")
+data <- as_tibble(data)
 ```
 
 ### 1.1
 _Приведите результаты биномиального теста._
 ```{r}
-binomial_test <- binom.test(x = data[[2]], n = data[[1]], p = data[[3]])
+binomial_test <- binom.test(x = data$k, n = data$n, p = data$prior)
 binomial_test
 ```
 
 ### 1.2
 _Приведите результаты симуляции, используя set.seed(42)._
 ```{r}
-
+set.seed(42)
+do(1000)*
+  sum(sample(x = 1:0, 
+             size = data$n, 
+             prob = c(data$prior, 1-data$prior), 
+             replace = TRUE)) ->
+  simulations
+simulations %>% 
+  mutate(greater = sum >= data$k) %>% 
+  count(greater)
 ```
 
 ### 1.3
