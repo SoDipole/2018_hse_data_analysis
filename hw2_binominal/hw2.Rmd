@@ -5,7 +5,7 @@ date: '21 февраля 2018 г '
 output: html_document
 ---
 
-_В вашей папке ледит файл с тремя значениями: nn — количество попыток, kk — количество успехов, priorprior — наши предворительные идеи относительно доли успехов._
+_В вашей папке ледит файл с тремя значениями: n — количество попыток, k — количество успехов, prior — наши предворительные идеи относительно доли успехов._
 ```{r, include=FALSE}
 library(tidyverse)
 library(mosaic)
@@ -37,15 +37,40 @@ simulations %>%
 ```
 
 ### 1.3
-_Приведите среднее апостериорного распределения, используя priorprior как средние априорного распределения, а nn как количество элементов для вычисления апостериорного распределения._
+_Приведите среднее апостериорного распределения, используя prior как средние априорного распределения, а n как количество элементов для вычисления апостериорного распределения._
 ```{r}
+alpha_prior <- data$prior*data$n
+beta_prior <- (1-data$prior)*data$n
 
+alpha_data <- data$k
+beta_data <- data$n - data$k
+
+alpha_post <- alpha_prior + alpha_data
+beta_post <- beta_prior + beta_data
+
+x <- seq(0, 1, length = 100)
+data_frame(p = rep(x, 3),
+           density = c(dbeta(x, alpha_prior, beta_prior),
+                       dbeta(x, alpha_data, beta_data),
+                       dbeta(x, alpha_post, beta_post)),
+           type = rep(c("prior", "likelihood", "posterior"), each = 100))%>% 
+  ggplot(aes(x = p, y = density, color = type))+
+  geom_line()+
+  theme_bw()
 ```
 
 ### 1.4
 _Приведите среднее апостериорного распределения, используя неинформативное априорное распределение._
 ```{r}
-
+x <- seq(0, 1, length = 100)
+data_frame(p = rep(x, 3),
+           density = c(dbeta(x, 1, 1),
+                       dbeta(x, alpha_data, beta_data),
+                       dbeta(x, alpha_data + 1, beta_data + 1)),
+           type = rep(c("prior", "likelihood", "posterior"), each = 100))%>% 
+  ggplot(aes(x = p, y = density, color = type))+
+  geom_line()+
+  theme_bw()
 ```
 
 ### 1.5
