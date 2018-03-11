@@ -20,7 +20,7 @@ library(tidyverse)
 library(bootstrap)
 library(mosaic)
 
-data <- read_csv("hw3_wodehouse.csv")
+data <- read_csv("https://raw.githubusercontent.com/SoDipole/2018_hse_data_analysis/master/hw3_binomial_ci/hw3_wodehouse.csv")
 
 ```
 
@@ -38,7 +38,6 @@ data %>%
   n_words
 
 n_in_chapter['n_words'] <- n_words$n
-
 n_in_chapter %>%
   mutate(average = n/n_words) %>% 
   arrange(desc(average)) %>% 
